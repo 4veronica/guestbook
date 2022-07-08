@@ -11,7 +11,7 @@ import (
 func CreatePage(c *gin.Context) {
 	pageInfo, err := getClientPage(c)
 	if err == nil {
-		err = database.WriteToDB(pageInfo)
+		err = database.WriteToDB(pageInfo.Title, pageInfo.Content)
 		if err == nil {
 			c.JSON(http.StatusOK, "Page 저장이 완료 되었음")
 		} else {

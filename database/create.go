@@ -2,14 +2,11 @@ package database
 
 import (
 	"fmt"
-	"guestbook/model"
 )
 
-func WriteToDB(pageInfo *model.Page) error {
-	pageID := pageInfo.PageID
-	pageTitle := pageInfo.Title
-	pageContents := pageInfo.Content
-	pageTime := pageInfo.MadeTime
+func WriteToDB(title, content string) error {
+	pageTitle := title
+	pageContents := content
 
 	var isPossibleDBConnect bool
 	isPossibleDBConnect = true
@@ -19,7 +16,7 @@ func WriteToDB(pageInfo *model.Page) error {
 		return fmt.Errorf("DB 연결이 불가능 합니다.")
 	} else {
 		//사용자로 부터 받은 아래의 정보를 DB에 넘겨줘서 저장한다.
-		_, _, _, _ = pageID, pageTitle, pageContents, pageTime
+		_, _ = pageTitle, pageContents
 		return nil
 	}
 }
