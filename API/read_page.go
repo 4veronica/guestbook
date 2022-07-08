@@ -4,26 +4,25 @@ import (
 	"github.com/gin-gonic/gin"
 	"guestbook/database"
 	"guestbook/model"
-	"strconv"
+	"net/http"
 )
 
 func ReadPage(c *gin.Context) {
-	clientID := c.Query("clientID")
-	pageNumberFromClient := c.Query("pageNumber")
-
-	pageNumber, err := strconv.Atoi(pageNumberFromClient)
-	if err != nil {
-		// ... handle error
-		panic(err)
-	}
-	webClient := model.Client{ID: clientID}
-	pageInfo := database.LoadFromDB(pageNumber)
-	responseReadPage(c, pageInfo, webClient)
+	allPages := database.LoadAllPagesFromDB()
+	responseReadPage(c, allPages)
 }
 
-func responseReadPage(c *gin.Context, pageInfo model.Page, webclient model.Client) {
-	c.JSON(200, gin.H{
-		"clientID":   webclient.ID,
-		"pageNumber": pageInfo.PageID,
-	})
+func responseReadPage(c *gin.Context, allPages []model.Page) {
+	if len(allPages) == 0 {
+		c.JSON(http.StatusOK, "방명록이 존재 하지 않습니다.")
+	}
+
+	for i := 0; i < len(allPages); i++ {
+		c.JSON(200, gin.H{
+			"Page ID":        allPages[i].PageID,
+			"Page Title":     allPages[i].Title,
+			"Page Content":   allPages[i].Content,
+			"Page Made Time": allPages[i].MadeTime,
+		})
+	}
 }

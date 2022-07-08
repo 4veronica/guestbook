@@ -2,6 +2,8 @@ package database
 
 import (
 	"fmt"
+	"guestbook/model"
+	"time"
 )
 
 func WriteToDB(title, content string) error {
@@ -15,8 +17,11 @@ func WriteToDB(title, content string) error {
 	if !isPossibleDBConnect {
 		return fmt.Errorf("DB 연결이 불가능 합니다.")
 	} else {
-		//사용자로 부터 받은 아래의 정보를 DB에 넘겨줘서 저장한다.
-		_, _ = pageTitle, pageContents
+		//사용자로 부터 받은 아래의 정보를 DB에 넘겨줘서 저장한다
+		pageID := len(model.QuestBookDB)
+		madeTime := time.Now()
+
+		model.QuestBookDB = append(model.QuestBookDB, model.Page{PageID: pageID, Title: pageTitle, Content: pageContents, MadeTime: madeTime})
 		return nil
 	}
 }

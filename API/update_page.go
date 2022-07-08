@@ -9,7 +9,7 @@ import (
 func UpdatePage(c *gin.Context) {
 	pageInfo, err := getClientPage(c)
 	if err == nil {
-		err = database.WriteChangeToDB(pageInfo)
+		err = database.WriteChangeToDB(pageInfo.PageID, pageInfo.Title, pageInfo.Content)
 		if err == nil {
 			c.JSON(http.StatusOK, "Page 수정 완료")
 		} else {

@@ -3,11 +3,17 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"guestbook/API"
+	"guestbook/model"
 )
 
 func main() {
+	appInit()
 	r := setupRouter()
 	r.Run(":8080")
+}
+
+func appInit() {
+	model.QuestBookDB = make([]model.Page, 0)
 }
 
 func setupRouter() *gin.Engine {

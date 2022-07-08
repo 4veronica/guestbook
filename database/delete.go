@@ -1,16 +1,28 @@
 package database
 
-import "fmt"
+import (
+	"fmt"
+	"guestbook/model"
+)
 
-func DeleteToDB(clientID string, pageID int) error {
+func DeleteToDB(pageID int) error {
 	var isPossibleDBConnect bool
 	isPossibleDBConnect = true
 
 	if !isPossibleDBConnect {
 		return fmt.Errorf("DB 연결이 불가능 합니다.")
 	} else {
-		//PageID를 DB에 넘겨주어 삭제 한다.
-		_, _ = clientID, pageID
+		targetIndex := -1
+		for i := 0; i < len(model.QuestBookDB); i++ {
+			if model.QuestBookDB[i].PageID == pageID {
+				targetIndex = i
+			}
+		}
+		if targetIndex == -1 {
+			return fmt.Errorf("해당 페이지는 존재하지 않습니다.")
+		} else {
+			model.QuestBookDB = append(model.QuestBookDB[:targetIndex], model.QuestBookDB[targetIndex+1:]...)
+		}
 		return nil
 	}
 }

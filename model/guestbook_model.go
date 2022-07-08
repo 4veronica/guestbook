@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+var QuestBookDB []Page
+
 type Page struct {
 	PageID   int       `json:"pageID"`
 	Title    string    `json:"title"`
@@ -19,6 +21,7 @@ func (b *Page) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &clientJson); err != nil {
 		return err
 	}
+
 	fmt.Println(clientJson)
 	return nil
 }
