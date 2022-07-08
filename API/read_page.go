@@ -19,10 +19,10 @@ func responseReadPage(c *gin.Context, allPages []model.Page) {
 
 	for i := 0; i < len(allPages); i++ {
 		c.JSON(200, gin.H{
-			"Page ID":        allPages[i].PageID,
-			"Page Title":     allPages[i].Title,
-			"Page Content":   allPages[i].Content,
-			"Page Made Time": allPages[i].MadeTime,
+			"Page ID":    allPages[i].PageID,
+			"Page Title": allPages[i].Title,
+			//		"Page Content":   allPages[i].Content,
+			//		"Page Made Time": allPages[i].MadeTime,
 		})
 	}
 }
