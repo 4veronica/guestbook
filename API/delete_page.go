@@ -8,10 +8,10 @@ import (
 )
 
 func DeletePage(c *gin.Context) {
-	pageNumberFromClient := c.Query("pageNumber")
-	pageNumber, err := strconv.Atoi(pageNumberFromClient)
+	pageIDFromClient := c.Query("pageID")
+	pageID, err := strconv.Atoi(pageIDFromClient)
 	if err == nil {
-		err = database.DeleteToDB(pageNumber)
+		err = database.DeleteToDB(pageID)
 		if err == nil {
 			c.JSON(http.StatusOK, "Page 삭제")
 		} else {
